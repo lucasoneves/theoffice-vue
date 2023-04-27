@@ -2,7 +2,8 @@
 import { ref } from 'vue'
 import Employee from '../components/Employee/index.vue'
 import ViewList from '../components/ViewList/index.vue'
-const employers = ref([
+
+const employeeList = ref([
   {
     name: 'Jim Halpert',
     role: 'Salesman',
@@ -37,21 +38,39 @@ const employers = ref([
     avatar: 'https://cdn.costumewall.com/wp-content/uploads/2018/09/michael-scott.jpg'
   }
 ])
+
+const favorites = ref([])
+
+function handleFavoriteCharacter(employee) {
+  favorites.value.push(employee.id)
+}
+
+function handleUnFavoriteCharacter(employee) {
+  const character = favorites.value.filter(item => item !== employee.id)
+  favorites.value = character
+  console.log(character)
+}
 </script>
 
 <template>
   <main>
+    <header class="header-section">
+      <div class="container">
+        <div class="actions">
+          <h2>Employees</h2>
+          <button class="actions__button">
+            <v-icon name="bi-plus-circle" fill="white" width="22" height="22" />Add new</button>
+        </div>
+      </div>
+    </header>
     <div class="container">
-      <h2>Employees</h2>
       <ViewList>
-        <template v-for="employee in employers" :key="employee.id">
-          <Employee
-            :name="employee.name"
-            :role="employee.role"
-            :email="employee.email"
-            :avatar="employee.avatar"
-            v-if="employee.status === 1"
-          />
+        <template v-for="employee in employeeList" :key="employee.id">
+          <Employee :name="employee.name" :role="employee.role" :email="employee.email" :avatar="employee.avatar"
+            v-if="employee.status === 1" :handleFavorite="() => handleFavoriteCharacter(employee)"
+            :handleUnfavorite="() => handleUnFavoriteCharacter(employee)"
+            :isFavorite="favorites.indexOf(employee.id) != -1" />
+
         </template>
       </ViewList>
     </div>

@@ -4,7 +4,10 @@ defineProps({
   role: String,
   email: String,
   id: String,
-  avatar: String
+  avatar: String,
+  handleFavorite: Function,
+  handleUnfavorite: Function,
+  isFavorite: Boolean
 })
 </script>
 
@@ -15,8 +18,8 @@ defineProps({
     <span>{{ role }}</span>
     <div class="card__actions">
       <a :href="'mailto:' + email" class="card__email">{{ email }}</a>
-      <button> <v-icon name="md-favoriteborder" fill="white"/></button>
-      
+      <button @click="handleFavorite" v-if="!isFavorite"> <v-icon name="md-favoriteborder" fill="white" /></button>
+      <button @click="handleUnfavorite" v-else> <v-icon name="md-favorite-sharp" fill="#9b2f2f" /></button>
     </div>
   </div>
 </template>

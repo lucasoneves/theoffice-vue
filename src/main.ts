@@ -1,14 +1,14 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { MdFavoriteborder } from "oh-vue-icons/icons";
+import { MdFavoriteborder, MdFavoriteSharp, BiPlusCircle } from "oh-vue-icons/icons";
 
 import App from './App.vue'
 import router from './router'
 
 import './assets/main.css'
 
-addIcons(MdFavoriteborder);
+addIcons(MdFavoriteborder, MdFavoriteSharp, BiPlusCircle);
 
 const app = createApp(App)
 
