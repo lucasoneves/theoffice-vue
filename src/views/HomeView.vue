@@ -1,16 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import Employee from '../components/Employee/index.vue'
 import ViewList from '../components/ViewList/index.vue'
 
-const employeeList = ref([
+const favorites = ref([])
+
+const employeeList = reactive([
   {
     name: 'Jim Halpert',
     role: 'Salesman',
     email: 'John@John.com',
     id: '1c9df8c7-158d-4b77-8b23-a9d669dfaca3',
     status: 1,
-    avatar: 'https://i.pinimg.com/originals/c9/32/83/c932837c36cb0cc2d60d290c72235f50.png'
+    avatar: 'https://i.pinimg.com/originals/c9/32/83/c932837c36cb0cc2d60d290c72235f50.png',
+    goal: {
+      target: 2000,
+      current: 120
+    }
   },
   {
     name: 'Dwight Scrhute',
@@ -19,7 +25,11 @@ const employeeList = ref([
     id: '1c9df8c7-158d-4b',
     status: 1,
     avatar:
-      'https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Dwight_Schrute.jpg/220px-Dwight_Schrute.jpg'
+      'https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Dwight_Schrute.jpg/220px-Dwight_Schrute.jpg',
+    goal: {
+      target: 1800,
+      current: 500
+    }
   },
   {
     name: 'Kevin Malone',
@@ -27,7 +37,11 @@ const employeeList = ref([
     email: 'kevin@dundermifflin.com',
     id: '0f0defb9-bb10-46c1-96bb-b63453347dcb',
     status: 1,
-    avatar: 'https://pbs.twimg.com/profile_images/515307069533331457/J-THo7yG_400x400.jpeg'
+    avatar: 'https://pbs.twimg.com/profile_images/515307069533331457/J-THo7yG_400x400.jpeg',
+    goal: {
+      target: 1400,
+      current: 400
+    }
   },
   {
     name: 'Michael Scott',
@@ -35,21 +49,37 @@ const employeeList = ref([
     email: 'michael@dundermifflin.com',
     id: '29f12be7-6cdc-4f4b-be0e-ecb378db14bc',
     status: 1,
-    avatar: 'https://cdn.costumewall.com/wp-content/uploads/2018/09/michael-scott.jpg'
+    avatar: 'https://cdn.costumewall.com/wp-content/uploads/2018/09/michael-scott.jpg',
+    goal: {
+      target: 1300,
+      current: 80
+    }
   }
 ])
 
-const favorites = ref([])
+const displayTotalTarget = computed(() => {
+  const targets = employeeList.map((e) => e.goal.target)
+  const hitTargets = employeeList.map((e) => e.goal.current)
+  const totalHitTargets = hitTargets.reduce((a, b) => a + b)
+  const totalFinalTargets = targets.reduce((a, b) => a + b)
+  return `${((totalHitTargets * 100) / totalFinalTargets).toFixed(1) + ' %'}`
 
-function handleFavoriteCharacter(employee) {
+})
+
+function displayPresencePercentage(user: any) {
+  return `${((user.goal.current * 100) / user.goal.target).toFixed(1) + ' %'}`
+}
+
+function handleFavoriteCharacter(employee: { id: any }) {
   favorites.value.push(employee.id)
 }
 
-function handleUnFavoriteCharacter(employee) {
+function handleUnFavoriteCharacter(employee: { id: any }) {
   const character = favorites.value.filter(item => item !== employee.id)
   favorites.value = character
   console.log(character)
 }
+
 </script>
 
 <template>
@@ -64,15 +94,24 @@ function handleUnFavoriteCharacter(employee) {
       </div>
     </header>
     <div class="container">
+      <h2 class="title-total">Total target: {{ displayTotalTarget }}</h2>
       <ViewList>
         <template v-for="employee in employeeList" :key="employee.id">
           <Employee :name="employee.name" :role="employee.role" :email="employee.email" :avatar="employee.avatar"
             v-if="employee.status === 1" :handleFavorite="() => handleFavoriteCharacter(employee)"
             :handleUnfavorite="() => handleUnFavoriteCharacter(employee)"
-            :isFavorite="favorites.indexOf(employee.id) != -1" />
+            :isFavorite="favorites.indexOf(employee.id) != -1" :percentage="displayPresencePercentage(employee)"
+            :increaseGoal="() => increaseGoal(employee)" />
 
         </template>
       </ViewList>
     </div>
   </main>
 </template>
+
+<style scoped lang="scss">
+  .title-total {
+    margin-bottom: 30px;
+    font-size: 20px;
+  }
+</style>
