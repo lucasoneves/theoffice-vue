@@ -7,7 +7,9 @@ defineProps({
   avatar: String,
   handleFavorite: Function,
   handleUnfavorite: Function,
-  isFavorite: Boolean
+  isFavorite: Boolean,
+  percentage: String,
+  increaseGoal: Function,
 })
 </script>
 
@@ -16,6 +18,7 @@ defineProps({
     <img :src="avatar" class="card__avatar" />
     <h2>{{ name }}</h2>
     <span>{{ role }}</span>
+    <span>Hit target: {{  percentage }}</span>
     <div class="card__actions">
       <a :href="'mailto:' + email" class="card__email">{{ email }}</a>
       <button @click="handleFavorite" v-if="!isFavorite"> <v-icon name="md-favoriteborder" fill="white" /></button>
@@ -25,6 +28,7 @@ defineProps({
 </template>
 
 <style scoped lang="scss">
+button {color: white;}
 .card {
   background: rgba(255, 255, 255, 0.1);
   color: rgb(241, 241, 241);
@@ -34,6 +38,11 @@ defineProps({
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
+
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+  }
 
   &__avatar {
     border-radius: 12px;
@@ -57,6 +66,7 @@ defineProps({
     justify-content: space-between;
     gap: 10px;
     width: 100%;
+    margin-top: 10px;
   }
 }
 </style>
