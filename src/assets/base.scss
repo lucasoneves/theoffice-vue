@@ -40,22 +40,28 @@ body {
 }
 
 .actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-  align-items: center;
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+  }
 }
 
 .actions h2 {
-  flex: 4;
+  @media (min-width: 768px) {
+    flex: 2;
+  }
+
+  flex: 1;
 }
 
 .actions__button {
-  background-color: teal;
   flex: 1;
-  height: 40px;
+  background-color: teal;
+  min-height: 40px;
   border-radius: 12px;
   color: white;
   font-weight: bold;
@@ -64,8 +70,9 @@ body {
   justify-content: center;
   gap: 5px;
   cursor: pointer;
+  width: 100%;
 }
 
 .actions__button:hover {
-  opacity: .9;
+  opacity: 0.9;
 }

@@ -9,7 +9,7 @@ defineProps({
   handleUnfavorite: Function,
   isFavorite: Boolean,
   percentage: String,
-  increaseGoal: Function,
+  increaseGoal: Function
 })
 </script>
 
@@ -18,17 +18,23 @@ defineProps({
     <img :src="avatar" class="card__avatar" />
     <h2>{{ name }}</h2>
     <span>{{ role }}</span>
-    <span>Hit target: {{  percentage }}</span>
+    <span>Hit target: {{ percentage }}</span>
     <div class="card__actions">
       <a :href="'mailto:' + email" class="card__email">{{ email }}</a>
-      <button @click="handleFavorite" v-if="!isFavorite"> <v-icon name="md-favoriteborder" fill="white" /></button>
-      <button @click="handleUnfavorite" v-else> <v-icon name="md-favorite-sharp" fill="#9b2f2f" /></button>
+      <button @click="handleFavorite" v-if="!isFavorite">
+        <v-icon name="md-favoriteborder" fill="white" />
+      </button>
+      <button @click="handleUnfavorite" v-else>
+        <v-icon name="md-favorite-sharp" fill="#9b2f2f" />
+      </button>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-button {color: white;}
+button {
+  color: white;
+}
 .card {
   background: rgba(255, 255, 255, 0.1);
   color: rgb(241, 241, 241);
@@ -46,11 +52,15 @@ button {color: white;}
 
   &__avatar {
     border-radius: 12px;
-    max-width: 280px;
+
     width: 100%;
     height: 280px;
     object-fit: cover;
     background: #9f9f9f;
+
+    @media (min-width: 768px) {
+      max-width: 280px;
+    }
   }
 
   &__email {

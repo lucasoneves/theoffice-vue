@@ -8,7 +8,7 @@ defineProps({
 
 <template>
   <div class="progress-bar">
-    <div class="progress-bar__filled" :style="{ width: total + '%' }"></div>
+    <div class="progress-bar__filled" :class="{ 'completed': total == 100 }" :style="{ width: total + '%' }"></div>
   </div>
 </template>
 
@@ -24,6 +24,10 @@ defineProps({
     height: inherit;
     background: linear-gradient(45deg, #96c68e, #10716d);
     border-radius: 10px 0 0 10px;
+  }
+
+  .completed {
+    border-radius: 10px;
   }
 }
 </style>
