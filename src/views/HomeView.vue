@@ -2,6 +2,7 @@
 import { reactive, ref, computed } from 'vue'
 import Employee from '../components/Employee/index.vue'
 import ViewList from '../components/ViewList/index.vue'
+import ProgressBar from '../components/ProgressBar/index.vue'
 
 const favorites = ref([])
 
@@ -15,7 +16,7 @@ const employeeList = reactive([
     avatar: 'https://i.pinimg.com/originals/c9/32/83/c932837c36cb0cc2d60d290c72235f50.png',
     goal: {
       target: 2000,
-      current: 120
+      current: 0
     }
   },
   {
@@ -28,7 +29,7 @@ const employeeList = reactive([
       'https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Dwight_Schrute.jpg/220px-Dwight_Schrute.jpg',
     goal: {
       target: 1800,
-      current: 500
+      current: 0
     }
   },
   {
@@ -40,7 +41,7 @@ const employeeList = reactive([
     avatar: 'https://pbs.twimg.com/profile_images/515307069533331457/J-THo7yG_400x400.jpeg',
     goal: {
       target: 1400,
-      current: 400
+      current: 0
     }
   },
   {
@@ -52,7 +53,7 @@ const employeeList = reactive([
     avatar: 'https://cdn.costumewall.com/wp-content/uploads/2018/09/michael-scott.jpg',
     goal: {
       target: 1300,
-      current: 80
+      current: 0
     }
   }
 ])
@@ -62,12 +63,11 @@ const displayTotalTarget = computed(() => {
   const hitTargets = employeeList.map((e) => e.goal.current)
   const totalHitTargets = hitTargets.reduce((a, b) => a + b)
   const totalFinalTargets = targets.reduce((a, b) => a + b)
-  return `${((totalHitTargets * 100) / totalFinalTargets).toFixed(1) + ' %'}`
-
+  return `${((totalHitTargets * 100) / totalFinalTargets).toFixed(1)}`
 })
 
 function displayPresencePercentage(user: any) {
-  return `${((user.goal.current * 100) / user.goal.target).toFixed(1) + ' %'}`
+  return `${((user.goal.current * 100) / user.goal.target).toFixed(1) + '%'}`
 }
 
 function handleFavoriteCharacter(employee: { id: any }) {
@@ -75,11 +75,10 @@ function handleFavoriteCharacter(employee: { id: any }) {
 }
 
 function handleUnFavoriteCharacter(employee: { id: any }) {
-  const character = favorites.value.filter(item => item !== employee.id)
+  const character = favorites.value.filter((item) => item !== employee.id)
   favorites.value = character
   console.log(character)
 }
-
 </script>
 
 <template>
@@ -89,20 +88,28 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
         <div class="actions">
           <h2>Employees</h2>
           <button class="actions__button">
-            <v-icon name="bi-plus-circle" fill="white" width="22" height="22" />Add new</button>
+            <v-icon name="bi-plus-circle" fill="white" width="22" height="22" />Add new
+          </button>
         </div>
       </div>
     </header>
     <div class="container">
-      <h2 class="title-total">Total target: {{ displayTotalTarget }}</h2>
+      <h2 class="title-total">Total target: <strong>{{ displayTotalTarget + '%' }}</strong></h2>
+      <ProgressBar :total="displayTotalTarget" />
       <ViewList>
         <template v-for="employee in employeeList" :key="employee.id">
-          <Employee :name="employee.name" :role="employee.role" :email="employee.email" :avatar="employee.avatar"
-            v-if="employee.status === 1" :handleFavorite="() => handleFavoriteCharacter(employee)"
+          <Employee
+            :name="employee.name"
+            :role="employee.role"
+            :email="employee.email"
+            :avatar="employee.avatar"
+            v-if="employee.status === 1"
+            :handleFavorite="() => handleFavoriteCharacter(employee)"
             :handleUnfavorite="() => handleUnFavoriteCharacter(employee)"
-            :isFavorite="favorites.indexOf(employee.id) != -1" :percentage="displayPresencePercentage(employee)"
-            :increaseGoal="() => increaseGoal(employee)" />
-
+            :isFavorite="favorites.indexOf(employee.id) != -1"
+            :percentage="displayPresencePercentage(employee)"
+            :increaseGoal="() => increaseGoal(employee)"
+          />
         </template>
       </ViewList>
     </div>
@@ -110,8 +117,13 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
 </template>
 
 <style scoped lang="scss">
-  .title-total {
-    margin-bottom: 30px;
-    font-size: 20px;
+.title-total {
+  margin-bottom: 10px;
+  font-size: 20px;
+
+  strong {
+    font-size: 30px;
+    font-weight: bold;
   }
+}
 </style>
