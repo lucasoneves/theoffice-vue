@@ -25,16 +25,24 @@ header {
 }
 
 .container {
+
   display: flex;
-  gap: 10px;
+  gap: 40px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  @media (min-width: 768px) {
+    gap: 10px;
+    justify-content: space-between;
+  }
 }
 
 .main-nav {
   &__list {
     display: flex;
     gap: 50px;
+    flex-wrap: wrap;
 
     a {
       text-decoration: none;
