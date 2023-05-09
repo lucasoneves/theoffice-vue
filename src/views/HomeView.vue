@@ -70,6 +70,10 @@ function displayPresencePercentage(user: any) {
   return `${((user.goal.current * 100) / user.goal.target).toFixed(1) + '%'}`
 }
 
+function isFavorite(employee: { id: any }) {
+  return favorites.value.indexOf(employee.id) != -1
+}
+
 function handleFavoriteCharacter(employee: { id: any }) {
   favorites.value.push(employee.id)
 }
@@ -99,16 +103,12 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
       <ViewList>
         <template v-for="employee in employeeList" :key="employee.id">
           <Employee
-            :name="employee.name"
-            :role="employee.role"
-            :email="employee.email"
-            :avatar="employee.avatar"
-            v-if="employee.status === 1"
-            :handleFavorite="() => handleFavoriteCharacter(employee)"
-            :handleUnfavorite="() => handleUnFavoriteCharacter(employee)"
-            :isFavorite="favorites.indexOf(employee.id) != -1"
+            :user="employee"
+            @handle-favorite="() => handleFavoriteCharacter(employee)"
+            @handle-unfavorite="() => handleUnFavoriteCharacter(employee)"
+            :isFavorite="isFavorite(employee)"
             :percentage="displayPresencePercentage(employee)"
-            :increaseGoal="() => increaseGoal(employee)"
+            v-if="employee.status === 1"
           />
         </template>
       </ViewList>

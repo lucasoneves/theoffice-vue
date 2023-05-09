@@ -1,32 +1,33 @@
 <script setup lang="ts">
 defineProps({
-  name: String,
-  role: String,
-  email: String,
-  id: String,
-  avatar: String,
-  handleFavorite: Function,
-  handleUnfavorite: Function,
+  user: Object,
   isFavorite: Boolean,
-  percentage: String,
-  increaseGoal: Function
+  percentage: String
 })
 </script>
 
 <template>
   <div class="card">
-    <img :src="avatar" class="card__avatar" />
-    <h2>{{ name }}</h2>
-    <span>{{ role }}</span>
-    <span>Hit target: {{ percentage }}</span>
-    <div class="card__actions">
-      <a :href="'mailto:' + email" class="card__email">{{ email }}</a>
-      <button @click="handleFavorite" v-if="!isFavorite">
+    <img :src="user?.avatar || 'https://www.seekpng.com/png/full/110-1100707_person-avatar-placeholder.png'" class="card__avatar" />
+    <header class="card__header">
+      <button
+        @click="$emit('handle-favorite', { name: user?.name, id: user?.id })"
+        v-if="!isFavorite"
+      >
         <v-icon name="md-favoriteborder" fill="white" />
       </button>
-      <button @click="handleUnfavorite" v-else>
+      <button @click="$emit('handle-unfavorite', { name: user?.name, id: user?.id })" v-else>
         <v-icon name="md-favorite-sharp" fill="#9b2f2f" />
       </button>
+      <button @click="$emit('edit-employee', { name: user?.name, id: user?.id })">
+        <v-icon name="hi-pencil-alt" fill="white" />
+      </button>
+    </header>
+    <h2>{{ user?.name }}</h2>
+    <span>{{ user?.role }}</span>
+    <span>Hit target: {{ percentage }}</span>
+    <div class="card__actions">
+      <a :href="'mailto:' + user?.email" class="card__email">{{ user?.email }}</a>
     </div>
   </div>
 </template>
@@ -34,6 +35,7 @@ defineProps({
 <style scoped lang="scss">
 button {
   color: white;
+  cursor: pointer;
 }
 .card {
   background: rgba(255, 255, 255, 0.1);
@@ -48,6 +50,13 @@ button {
   h2 {
     font-size: 20px;
     font-weight: bold;
+  }
+
+  &__header {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+    justify-content: flex-end;
   }
 
   &__avatar {
