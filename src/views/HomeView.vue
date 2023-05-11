@@ -70,7 +70,7 @@ function displayPresencePercentage(user: any) {
   return `${((user.goal.current * 100) / user.goal.target).toFixed(1) + '%'}`
 }
 
-function isFavorite(employee: { id: any }) {
+function isFavorite(employee: { id: Number }) {
   return favorites.value.indexOf(employee.id) != -1
 }
 
