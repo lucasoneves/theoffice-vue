@@ -15,10 +15,11 @@ defineProps({
 <style scoped lang="scss">
 .progress-bar {
   background: rgb(212, 212, 212);
-  width: 100%;
+  width: 320px;
   height: 30px;
   margin-bottom: 20px;
   border-radius: 10px;
+  overflow: hidden;
 
   &__filled {
     height: inherit;

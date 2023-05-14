@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { reactive, ref, computed } from 'vue'
 import Employee from '../components/Employee/index.vue'
 import ViewList from '../components/ViewList/index.vue'
 import ProgressBar from '../components/ProgressBar/index.vue'
+
+onMounted(() => {
+  console.log("app mounted...")
+})
 
 const favorites = ref([])
 
@@ -29,7 +34,7 @@ const employeeList = reactive([
       'https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Dwight_Schrute.jpg/220px-Dwight_Schrute.jpg',
     goal: {
       target: 1800,
-      current: 0
+      current: 1
     }
   },
   {
@@ -41,7 +46,7 @@ const employeeList = reactive([
     avatar: 'https://pbs.twimg.com/profile_images/515307069533331457/J-THo7yG_400x400.jpeg',
     goal: {
       target: 1400,
-      current: 0
+      current: 14
     }
   },
   {
@@ -53,7 +58,7 @@ const employeeList = reactive([
     avatar: 'https://cdn.costumewall.com/wp-content/uploads/2018/09/michael-scott.jpg',
     goal: {
       target: 1300,
-      current: 0
+      current: 130
     }
   }
 ])
@@ -63,10 +68,11 @@ const displayTotalTarget = computed(() => {
   const hitTargets = employeeList.map((e) => e.goal.current)
   const totalHitTargets = hitTargets.reduce((a, b) => a + b)
   const totalFinalTargets = targets.reduce((a, b) => a + b)
-  return `${((totalHitTargets * 100) / totalFinalTargets).toFixed(1)}`
+  const resultFinal = (totalHitTargets * 100) / totalFinalTargets
+  return resultFinal.toFixed(1)
 })
 
-function displayPresencePercentage(user: any) {
+function displayTargetPercentage(user: any) {
   return `${((user.goal.current * 100) / user.goal.target).toFixed(1) + '%'}`
 }
 
@@ -81,7 +87,6 @@ function handleFavoriteCharacter(employee: { id: any }) {
 function handleUnFavoriteCharacter(employee: { id: any }) {
   const character = favorites.value.filter((item) => item !== employee.id)
   favorites.value = character
-  console.log(character)
 }
 </script>
 
@@ -107,7 +112,7 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
             @handle-favorite="() => handleFavoriteCharacter(employee)"
             @handle-unfavorite="() => handleUnFavoriteCharacter(employee)"
             :isFavorite="isFavorite(employee)"
-            :percentage="displayPresencePercentage(employee)"
+            :percentage="displayTargetPercentage(employee)"
             v-if="employee.status === 1"
           />
         </template>
