@@ -4,6 +4,7 @@ import { reactive, ref, computed } from 'vue'
 import Employee from '../components/Employee/index.vue'
 import ViewList from '../components/ViewList/index.vue'
 import ProgressBar from '../components/ProgressBar/index.vue'
+import Button from '../components/Button/index.vue'
 
 onMounted(() => {
   console.log("app mounted...")
@@ -11,11 +12,13 @@ onMounted(() => {
 
 const favorites = ref([])
 
+const COMPANY_EMAIL_DOMAIN = 'dundermifflin.com'
+
 const employeeList = reactive([
   {
     name: 'Jim Halpert',
     role: 'Salesman',
-    email: 'John@John.com',
+    email: `jim@${COMPANY_EMAIL_DOMAIN}`,
     id: '1c9df8c7-158d-4b77-8b23-a9d669dfaca3',
     status: 1,
     avatar: 'https://i.pinimg.com/originals/c9/32/83/c932837c36cb0cc2d60d290c72235f50.png',
@@ -27,7 +30,7 @@ const employeeList = reactive([
   {
     name: 'Dwight Scrhute',
     role: 'Salesman',
-    email: 'dwight.scrhute@gmail.com',
+    email: `dwight@${COMPANY_EMAIL_DOMAIN}`,
     id: '1c9df8c7-158d-4b',
     status: 1,
     avatar:
@@ -40,7 +43,7 @@ const employeeList = reactive([
   {
     name: 'Kevin Malone',
     role: 'Accounting',
-    email: 'kevin@dundermifflin.com',
+    email: `kevin@${COMPANY_EMAIL_DOMAIN}`,
     id: '0f0defb9-bb10-46c1-96bb-b63453347dcb',
     status: 1,
     avatar: 'https://pbs.twimg.com/profile_images/515307069533331457/J-THo7yG_400x400.jpeg',
@@ -52,7 +55,7 @@ const employeeList = reactive([
   {
     name: 'Michael Scott',
     role: 'Regional Manager',
-    email: 'michael@dundermifflin.com',
+    email: `michael@${COMPANY_EMAIL_DOMAIN}`,
     id: '29f12be7-6cdc-4f4b-be0e-ecb378db14bc',
     status: 1,
     avatar: 'https://cdn.costumewall.com/wp-content/uploads/2018/09/michael-scott.jpg',
@@ -96,9 +99,9 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
       <div class="container">
         <div class="actions">
           <h2>Employees</h2>
-          <button class="actions__button">
+          <Button class="actions__button">
             <v-icon name="bi-plus-circle" fill="white" width="22" height="22" />Add new
-          </button>
+          </Button>
         </div>
       </div>
     </header>
