@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+
 import { reactive, ref, computed } from 'vue'
 import Employee from '../components/Employee/index.vue'
-import ViewList from '../components/ViewList/index.vue'
+import EmployeeListView from '../components/EmployeeListView/index.vue'
 import ProgressBar from '../components/ProgressBar/index.vue'
 import Button from '../components/Button/index.vue'
 
-onMounted(() => {
-  console.log("app mounted...")
-})
+
+
+
 
 const favorites = ref([])
+const users = ref([])
 
 const COMPANY_EMAIL_DOMAIN = 'dundermifflin.com'
+
 
 const employeeList = reactive([
   {
@@ -66,9 +68,11 @@ const employeeList = reactive([
   }
 ])
 
+
+
 const displayTotalTarget = computed(() => {
-  const targets = employeeList.map((e) => e.goal.target)
-  const hitTargets = employeeList.map((e) => e.goal.current)
+  const targets = employeeList.map((e) => e.goal?.target)
+  const hitTargets = employeeList.map((e) => e.goal?.current)
   const totalHitTargets = hitTargets.reduce((a, b) => a + b)
   const totalFinalTargets = targets.reduce((a, b) => a + b)
   const resultFinal = (totalHitTargets * 100) / totalFinalTargets
@@ -108,7 +112,7 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
     <div class="container">
       <h2 class="title-total">Total target: <strong>{{ displayTotalTarget + '%' }}</strong></h2>
       <ProgressBar :total="displayTotalTarget" />
-      <ViewList>
+      <EmployeeListView>
         <template v-for="employee in employeeList" :key="employee.id">
           <Employee
             :user="employee"
@@ -119,7 +123,7 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
             v-if="employee.status === 1"
           />
         </template>
-      </ViewList>
+      </EmployeeListView>
     </div>
   </main>
 </template>
