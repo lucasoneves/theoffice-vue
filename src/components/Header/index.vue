@@ -10,9 +10,8 @@ const logoImage = ref({ logo: logo })
       <img :src=logoImage.logo alt="Company Logo">
       <nav class="main-nav">
         <ul class="main-nav__list">
-          <li><a href="">Home</a></li>
-          <li><a href="">Employees</a></li>
-          <li><a href="">Fornecedores</a></li>
+          <li><a href="/">Employees</a></li>
+          <li><a href="/supliers" @click="$emit('show-supliers')">Supliers</a></li>
         </ul>
       </nav>
     </div>
