@@ -115,6 +115,7 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
       <EmployeeListView>
         <template v-for="employee in employeeList" :key="employee.id">
           <Employee
+            :key="employee.id"
             :user="employee"
             @handle-favorite="() => handleFavoriteCharacter(employee)"
             @handle-unfavorite="() => handleUnFavoriteCharacter(employee)"

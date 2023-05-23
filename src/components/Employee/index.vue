@@ -25,24 +25,23 @@ defineEmits(['handle-favorite', 'handle-unfavorite', 'edit-employee'])
       <a :href="'mailto:' + user?.email" class="card__email">{{ user?.email }}</a>
     </div>
     <footer class="card__footer">
-      <Button
-        isFlat
-        :title="'Favorite'"
-        @click="$emit('handle-favorite', { name: user?.name, id: user?.id })"
-        v-if="!isFavorite"
-      >
-        <v-icon name="md-favoriteborder" fill="white" />
-      </Button>
-      <Button
-        :title="'Unfavorite'"
-        @click="$emit('handle-unfavorite', { name: user?.name, id: user?.id })"
-        v-else
-      >
-        <v-icon name="md-favorite-sharp" fill="#9b2f2f" />
-      </Button>
       <Button :title="'Edit'" :is-primary="true" @click="$emit('edit-employee', { name: user?.name, id: user?.id })">
         <v-icon name="hi-pencil-alt" fill="white" />
       </Button>
+      <span
+        isFlat
+        :title="'Favorite'"
+        @click.prevent="$emit('handle-favorite', { name: user?.name, id: user?.id })"
+        v-if="!isFavorite"
+      >
+        <v-icon name="md-favoriteborder" fill="white" />
+      </span>
+      <span
+        @click.prevent="$emit('handle-unfavorite', { name: user?.name, id: user?.id })"
+        v-else
+      >
+        <v-icon name="md-favorite-sharp" fill="#9b2f2f" />
+    </span>
     </footer>
   </div>
 </template>
@@ -70,6 +69,7 @@ button {
 
   &__footer {
     display: flex;
+    align-items: center;
     width: 100%;
     gap: 15px;
     margin-top: 20px;
