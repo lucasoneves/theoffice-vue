@@ -32,9 +32,11 @@ let suplierList = reactive(supliersData)
 .card-suplier {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 30px;
-
+  
   &__item {
+    width: 100%;
     &:nth-child(2) {
       flex: 2;
     }
@@ -57,6 +59,10 @@ let suplierList = reactive(supliersData)
       flex-direction: column;
       justify-content: space-between;
       gap: 10px;
+    }
+
+    @media (min-width: 640px) {
+      width: auto;
     }
   }
 

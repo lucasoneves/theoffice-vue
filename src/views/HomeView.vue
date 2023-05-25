@@ -4,11 +4,10 @@ import { reactive, ref, computed } from 'vue'
 import Employee from '../components/Employee/index.vue'
 import EmployeeListView from '../components/EmployeeListView/index.vue'
 import ProgressBar from '../components/ProgressBar/index.vue'
-import Button from '../components/Button/index.vue'
 import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue'
+import ButtonAddNew from '@/components/ButtonAddNew/ButtonAddNewIndex.vue'
 
 const favorites = ref([])
-const users = ref([])
 
 const COMPANY_EMAIL_DOMAIN = 'dundermifflin.com'
 
@@ -97,9 +96,7 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
 <template>
   <main>
     <HeroSectionIndex title="Employees">
-      <Button class="actions__button" is-primary title="Add New">
-        <v-icon name="bi-plus-circle" fill="white" width="22" height="22" />
-      </Button>
+      <ButtonAddNew action="add-employee"/>
     </HeroSectionIndex>
     <div class="container">
       <h2 class="title-total">Total target: <strong>{{ displayTotalTarget + '%' }}</strong></h2>

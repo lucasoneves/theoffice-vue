@@ -11,7 +11,10 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  title: String
+  title: {
+    type: String,
+    default: ""
+  }
 })
 </script>
 
