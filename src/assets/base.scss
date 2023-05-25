@@ -4,27 +4,13 @@
   --utopia: #01061f;
   --radius: 10px;
 }
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  position: relative;
-  font-weight: normal;
-}
 
 body {
   min-height: 100vh;
   color: var(--city);
   background: linear-gradient(to right bottom, var(--dracula), var(--utopia));
-  transition: color 0.5s, background-color 0.5s;
-  line-height: 1.6;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  font-size: 15px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
@@ -41,39 +27,12 @@ body {
 }
 
 .actions {
-  @media (min-width: 768px) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: center;
-  }
-}
-
-.actions h2 {
-  @media (min-width: 768px) {
-    flex: 2;
-  }
-
-  flex: 1;
-}
-
-.actions__button {
-  flex: 1;
-  background-color: teal;
-  min-height: 40px;
-  border-radius: 12px;
-  color: white;
-  font-weight: bold;
   display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
-  cursor: pointer;
-  width: 100%;
-}
-
-.actions__button:hover {
-  opacity: 0.9;
+  h2 {
+    flex: 3;
+  }
 }

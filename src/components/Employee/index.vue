@@ -25,11 +25,10 @@ defineEmits(['handle-favorite', 'handle-unfavorite', 'edit-employee'])
       <a :href="'mailto:' + user?.email" class="card__email">{{ user?.email }}</a>
     </div>
     <footer class="card__footer">
-      <Button :title="'Edit'" :is-primary="true" @click="$emit('edit-employee', { name: user?.name, id: user?.id })">
+      <Button :title="'Edit'" is-flat @click="$emit('edit-employee', { name: user?.name, id: user?.id })">
         <v-icon name="hi-pencil-alt" fill="white" />
       </Button>
       <span
-        isFlat
         :title="'Favorite'"
         @click.prevent="$emit('handle-favorite', { name: user?.name, id: user?.id })"
         v-if="!isFavorite"
@@ -104,6 +103,10 @@ button {
     gap: 10px;
     width: 100%;
     margin-top: 10px;
+
+    a {
+      padding: 10px;
+    }
   }
 }
 </style>

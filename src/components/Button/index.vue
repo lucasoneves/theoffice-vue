@@ -18,20 +18,20 @@ defineProps({
     display: flex;
     align-items: center;
     gap: 5px;
-    justify-content: space-between;
     padding: 10px 20px;
     border-radius: var(--radius);
     border: 1px solid transparent;
     min-height: 42px;
     justify-content: center;
-    width: 100%;
+    cursor: pointer;
 
     &:hover {
       opacity: .8;
     }
 
     &__primary {
-      background-color: var(--dracula);
+      background-color: teal;
+      color: #fff;
     }
 
     &__flat {
