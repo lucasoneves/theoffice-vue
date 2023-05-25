@@ -5,10 +5,7 @@ import Employee from '../components/Employee/index.vue'
 import EmployeeListView from '../components/EmployeeListView/index.vue'
 import ProgressBar from '../components/ProgressBar/index.vue'
 import Button from '../components/Button/index.vue'
-
-
-
-
+import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue'
 
 const favorites = ref([])
 const users = ref([])
@@ -99,16 +96,11 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
 
 <template>
   <main>
-    <header class="header-section">
-      <div class="container">
-        <div class="actions">
-          <h2>Employees</h2>
-          <Button class="actions__button" is-primary>
-            <v-icon name="bi-plus-circle" fill="white" width="22" height="22" />Add new
-          </Button>
-        </div>
-      </div>
-    </header>
+    <HeroSectionIndex title="Employees">
+      <Button class="actions__button" is-primary title="Add New">
+        <v-icon name="bi-plus-circle" fill="white" width="22" height="22" />
+      </Button>
+    </HeroSectionIndex>
     <div class="container">
       <h2 class="title-total">Total target: <strong>{{ displayTotalTarget + '%' }}</strong></h2>
       <ProgressBar :total="displayTotalTarget" />
