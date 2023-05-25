@@ -1,15 +1,8 @@
 <template>
   <main>
-    <header class="header-section">
-      <div class="container">
-        <div class="actions">
-          <h2>Supliers</h2>
-          <Button class="actions__button" is-primary>
-            <v-icon name="bi-plus-circle" fill="white" width="22" height="22" />Add new
-          </Button>
-        </div>
-      </div>
-    </header>
+    <HeroSectionIndex title="Supliers">
+      <ButtonAddNewIndex action="add-suplier" />
+    </HeroSectionIndex>
 
     <Suspense>
       <SuplierListIndex />
@@ -23,7 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import Button from '../components/Button/index.vue';
+import ButtonAddNewIndex from '@/components/ButtonAddNew/ButtonAddNewIndex.vue';
+import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue';
 import SuplierListIndex from '@/components/SupliersList/SuplierListIndex.vue';
 </script>
 

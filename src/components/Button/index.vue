@@ -24,6 +24,7 @@ defineProps({
     min-height: 42px;
     justify-content: center;
     cursor: pointer;
+    width: 100%;
 
     &:hover {
       opacity: .8;
@@ -36,6 +37,10 @@ defineProps({
 
     &__flat {
       border: 1px solid var(--city);
+    }
+
+    @media (min-width: 640px) {
+      width: auto;
     }
   }
 </style>
