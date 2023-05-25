@@ -103,7 +103,7 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
       <div class="container">
         <div class="actions">
           <h2>Employees</h2>
-          <Button class="actions__button">
+          <Button class="actions__button" is-primary>
             <v-icon name="bi-plus-circle" fill="white" width="22" height="22" />Add new
           </Button>
         </div>
