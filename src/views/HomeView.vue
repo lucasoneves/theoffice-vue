@@ -1,16 +1,18 @@
 <script setup lang="ts">
 
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
 import Employee from '../components/Employee/index.vue'
 import EmployeeListView from '../components/EmployeeListView/index.vue'
 import ProgressBar from '../components/ProgressBar/index.vue'
 import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue'
 import ButtonAddNew from '@/components/ButtonAddNew/ButtonAddNewIndex.vue'
-
+// import { useEmployees } from '@/composables/useEmployees';
+import { useFetch } from '@/composables/useFetch';
 const favorites = ref([])
 
 const COMPANY_EMAIL_DOMAIN = 'dundermifflin.com'
 
+const { data, error } = useFetch('https://jsonplaceholder.typicode.com/todos');
 
 const employeeList = reactive([
   {
@@ -95,23 +97,18 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
 
 <template>
   <main>
+
     <HeroSectionIndex title="Employees">
-      <ButtonAddNew action="add-employee"/>
+      <ButtonAddNew action="add-employee" />
     </HeroSectionIndex>
     <div class="container">
       <h2 class="title-total">Total target: <strong>{{ displayTotalTarget + '%' }}</strong></h2>
       <ProgressBar :total="displayTotalTarget" />
       <EmployeeListView>
         <template v-for="employee in employeeList" :key="employee.id">
-          <Employee
-            :key="employee.id"
-            :user="employee"
-            @handle-favorite="() => handleFavoriteCharacter(employee)"
-            @handle-unfavorite="() => handleUnFavoriteCharacter(employee)"
-            :isFavorite="isFavorite(employee)"
-            :percentage="displayTargetPercentage(employee)"
-            v-if="employee.status === 1"
-          />
+          <Employee :key="employee.id" :user="employee" @handle-favorite="() => handleFavoriteCharacter(employee)"
+            @handle-unfavorite="() => handleUnFavoriteCharacter(employee)" :isFavorite="isFavorite(employee)"
+            :percentage="displayTargetPercentage(employee)" v-if="employee.status === 1" />
         </template>
       </EmployeeListView>
     </div>

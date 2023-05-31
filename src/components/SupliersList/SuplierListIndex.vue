@@ -6,7 +6,7 @@
           <img :src="suplier.avatar" alt="" class="card-suplier__avatar">
         </div>
         <div class="card-suplier__item card-suplier__item--flex">
-          <span>{{ suplier.first_name }} {{ suplier.last_name }}</span>
+          <span>{{ suplier.name }}</span>
           <span>{{ suplier.email }}</span>
         </div>
         <div class="card-suplier__item">
@@ -22,9 +22,13 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 import Card from '../Card/CardIndex.vue'
-import supliersData from '@/data/supliers.json'
 import Button from '@/components/Button/index.vue';
-let suplierList = reactive(supliersData)
+import { useFetch } from '@/composables/useFetch';
+
+
+let { data } = useFetch('https://647698799233e82dd53a29b1.mockapi.io/users')
+
+let suplierList = reactive(data)
 
 </script>
 
