@@ -37,7 +37,7 @@ const employeeList = reactive([
       'https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Dwight_Schrute.jpg/220px-Dwight_Schrute.jpg',
     goal: {
       target: 1800,
-      current: 1
+      current: 0
     }
   },
   {
@@ -49,7 +49,7 @@ const employeeList = reactive([
     avatar: 'https://pbs.twimg.com/profile_images/515307069533331457/J-THo7yG_400x400.jpeg',
     goal: {
       target: 1400,
-      current: 14
+      current: 0
     }
   },
   {
@@ -61,7 +61,7 @@ const employeeList = reactive([
     avatar: 'https://cdn.costumewall.com/wp-content/uploads/2018/09/michael-scott.jpg',
     goal: {
       target: 1300,
-      current: 130
+      current: 0
     }
   }
 ])
