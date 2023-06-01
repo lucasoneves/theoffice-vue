@@ -1,13 +1,19 @@
 import { ref } from 'vue'
 
-export function useFetch(url) {
-  const data = ref(null)
-  const error = ref(null)
+export async function useFetch(url: string) {
+  const data = ref()
+  const error = ref()
 
-  fetch(url)
-    .then((res) => res.json())
-    .then((json) => (data.value = json))
-    .catch((err) => (error.value = err))
+  
+  
+  try {
+    const response = await fetch(url)
+    data.value = await response.json()
+    return data
+  } catch (err) {
+    error.value = err
+    console.error(err)
+  }
 
   return { data, error }
 }

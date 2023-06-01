@@ -26,7 +26,7 @@ import Button from '@/components/Button/index.vue';
 import { useFetch } from '@/composables/useFetch';
 
 
-let { data } = useFetch('https://647698799233e82dd53a29b1.mockapi.io/users')
+let data = await useFetch('https://647698799233e82dd53a29b1.mockapi.io/users')
 
 let suplierList = reactive(data)
 

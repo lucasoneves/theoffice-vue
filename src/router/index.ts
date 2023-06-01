@@ -1,20 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import SupliersView from '../views/SupliersView.vue'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('../views/HomeView.vue'
+      )
     },
     {
       path: '/supliers',
       name: 'supliers',
-      component: SupliersView
-    },
+      component: () => import('../views/SupliersView.vue')
+    }
   ]
 })
 

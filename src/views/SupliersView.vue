@@ -7,7 +7,7 @@
     <Suspense>
       <SuplierListIndex />
       <template #fallback>
-        <h2>Carregando</h2>
+        <h2>Carregando...</h2>
       </template>
     </Suspense>
     
@@ -22,5 +22,10 @@ import SuplierListIndex from '@/components/SupliersList/SuplierListIndex.vue';
 </script>
 
 <style lang="scss" scoped>
-
+main {
+  min-height: 50vh;
+}
+  h2 {
+    text-align: center;
+  }
 </style>
