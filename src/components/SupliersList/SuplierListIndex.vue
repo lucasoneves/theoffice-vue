@@ -3,7 +3,7 @@
     <template v-for="suplier in suplierList" :key="suplier.id">
       <Card class="card-suplier">
         <div class="card-suplier__item card-suplier__item--avatar">
-          <img :src="suplier.avatar" alt="" class="card-suplier__avatar">
+          <img :src="suplier.avatar" alt="" class="card-suplier__avatar" loading="lazy">
         </div>
         <div class="card-suplier__item card-suplier__item--flex">
           <span>{{ suplier.name }}</span>
@@ -24,7 +24,6 @@ import { reactive } from 'vue'
 import Card from '../Card/CardIndex.vue'
 import Button from '@/components/Button/index.vue';
 import { useFetch } from '@/composables/useFetch';
-
 
 let data = await useFetch('https://647698799233e82dd53a29b1.mockapi.io/users')
 

@@ -1,7 +1,7 @@
 <template>
   <main>
     <HeroSectionIndex title="Supliers">
-      <ButtonAddNewIndex action="add-suplier" />
+      <ButtonAddNewIndex action="add-suplier" @add-suplier="goToAddSuplier"/>
     </HeroSectionIndex>
 
     <Suspense>
@@ -19,6 +19,12 @@
 import ButtonAddNewIndex from '@/components/ButtonAddNew/ButtonAddNewIndex.vue';
 import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue';
 import SuplierListIndex from '@/components/SupliersList/SuplierListIndex.vue';
+import router from '@/router';
+
+function goToAddSuplier() {
+  router.push('/supliers/add')
+}
+
 </script>
 
 <style lang="scss" scoped>
