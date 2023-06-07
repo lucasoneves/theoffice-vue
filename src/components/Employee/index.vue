@@ -25,7 +25,7 @@ defineEmits(['handle-favorite', 'handle-unfavorite', 'edit-employee'])
       <a :href="'mailto:' + user?.email" class="card__email">{{ user?.email }}</a>
     </div>
     <footer class="card__footer">
-      <Button :title="'Edit'" is-flat @click="$emit('edit-employee', { name: user?.name, id: user?.id })">
+      <Button :title="'Edit'" is-flat @click="$emit('edit-employee')">
         <v-icon name="hi-pencil-alt" fill="white" />
       </Button>
       <span

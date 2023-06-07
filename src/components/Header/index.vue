@@ -10,7 +10,7 @@ const logoImage = ref({ logo: logo })
       <img :src=logoImage.logo alt="Company Logo">
       <nav class="main-nav">
         <ul class="main-nav__list">
-          <li><router-link to="/">Employees</router-link></li>
+          <li><router-link to="/employees">Employees</router-link></li>
           <li><router-link to="/supliers" @click="$emit('show-supliers')">Supliers</router-link></li>
         </ul>
       </nav>

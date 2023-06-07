@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
 import Employee from '../components/Employee/index.vue'
 import EmployeeListView from '../components/EmployeeListView/index.vue'
@@ -7,66 +6,14 @@ import ProgressBar from '../components/ProgressBar/index.vue'
 import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue'
 import ButtonAddNew from '@/components/ButtonAddNew/ButtonAddNewIndex.vue'
 // import { useEmployees } from '@/composables/useEmployees';
-import { useFetch } from '@/composables/useFetch';
+import { useFetch } from '@/composables/useFetch'
+import router from '@/router'
+import employeesData from '@/data/employees.json'
 const favorites = ref([])
 
-const COMPANY_EMAIL_DOMAIN = 'dundermifflin.com'
+const { data, error } = useFetch('https://jsonplaceholder.typicode.com/todos')
 
-const { data, error } = useFetch('https://jsonplaceholder.typicode.com/todos');
-
-const employeeList = reactive([
-  {
-    name: 'Jim Halpert',
-    role: 'Salesman',
-    email: `jim@${COMPANY_EMAIL_DOMAIN}`,
-    id: '1c9df8c7-158d-4b77-8b23-a9d669dfaca3',
-    status: 1,
-    avatar: 'https://i.pinimg.com/originals/c9/32/83/c932837c36cb0cc2d60d290c72235f50.png',
-    goal: {
-      target: 2000,
-      current: 0
-    }
-  },
-  {
-    name: 'Dwight Scrhute',
-    role: 'Salesman',
-    email: `dwight@${COMPANY_EMAIL_DOMAIN}`,
-    id: '1c9df8c7-158d-4b',
-    status: 1,
-    avatar:
-      'https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Dwight_Schrute.jpg/220px-Dwight_Schrute.jpg',
-    goal: {
-      target: 1800,
-      current: 0
-    }
-  },
-  {
-    name: 'Kevin Malone',
-    role: 'Accounting',
-    email: `kevin@${COMPANY_EMAIL_DOMAIN}`,
-    id: '0f0defb9-bb10-46c1-96bb-b63453347dcb',
-    status: 1,
-    avatar: 'https://pbs.twimg.com/profile_images/515307069533331457/J-THo7yG_400x400.jpeg',
-    goal: {
-      target: 1400,
-      current: 0
-    }
-  },
-  {
-    name: 'Michael Scott',
-    role: 'Regional Manager',
-    email: `michael@${COMPANY_EMAIL_DOMAIN}`,
-    id: '29f12be7-6cdc-4f4b-be0e-ecb378db14bc',
-    status: 1,
-    avatar: 'https://cdn.costumewall.com/wp-content/uploads/2018/09/michael-scott.jpg',
-    goal: {
-      target: 1300,
-      current: 0
-    }
-  }
-])
-
-
+const employeeList = reactive(employeesData)
 
 const displayTotalTarget = computed(() => {
   const targets = employeeList.map((e) => e.goal?.target)
@@ -93,22 +40,38 @@ function handleUnFavoriteCharacter(employee: { id: any }) {
   const character = favorites.value.filter((item) => item !== employee.id)
   favorites.value = character
 }
+
+function goToAddEmployee() {
+  router.push(router.currentRoute.value.path + '/add')
+}
+
+function handleEditEmployee(id: string) {
+  router.push(router.currentRoute.value.path + '/edit/' + id)
+}
 </script>
 
 <template>
   <main>
-
     <HeroSectionIndex title="Employees">
-      <ButtonAddNew action="add-employee" />
+      <ButtonAddNew action="add-employee" @add-employee="goToAddEmployee" />
     </HeroSectionIndex>
     <div class="container">
-      <h2 class="title-total">Total target: <strong>{{ displayTotalTarget + '%' }}</strong></h2>
+      <h2 class="title-total">
+        Total target: <strong>{{ displayTotalTarget + '%' }}</strong>
+      </h2>
       <ProgressBar :total="displayTotalTarget" />
       <EmployeeListView>
         <template v-for="employee in employeeList" :key="employee.id">
-          <Employee :key="employee.id" :user="employee" @handle-favorite="() => handleFavoriteCharacter(employee)"
-            @handle-unfavorite="() => handleUnFavoriteCharacter(employee)" :isFavorite="isFavorite(employee)"
-            :percentage="displayTargetPercentage(employee)" v-if="employee.status === 1" />
+          <Employee
+            :key="employee.id"
+            :user="employee"
+            @handle-favorite="() => handleFavoriteCharacter(employee)"
+            @handle-unfavorite="() => handleUnFavoriteCharacter(employee)"
+            :isFavorite="isFavorite(employee)"
+            :percentage="displayTargetPercentage(employee)"
+            @edit-employee="handleEditEmployee(employee.id)"
+            v-if="employee.status === 1"
+          />
         </template>
       </EmployeeListView>
     </div>
