@@ -8,7 +8,10 @@ import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue'
 import ButtonAddNew from '@/components/ButtonAddNew/ButtonAddNewIndex.vue'
 // import { useEmployees } from '@/composables/useEmployees';
 import router from '@/router'
-import employeesData from '@/data/employees.json'
+
+import { useEmployeeStore } from '@/stores/EmployeesStore'
+
+const employeeList = useEmployeeStore().employeesData
 
 interface EmployeeType {
   id: string
@@ -17,16 +20,14 @@ interface EmployeeType {
   email: string
   status: number
   avatar: string
-  goal: { target: number, current: number }
+  goal: { target: number; current: number }
 }
 
 const favorites = ref<Array<EmployeeType>>([])
 
-const employeeList = ref<Array<EmployeeType>>(employeesData)
-
 const displayTotalTarget = computed(() => {
-  const targets = employeeList.value.map((e) => e.goal.target)
-  const hitTargets = employeeList.value.map((e) => e.goal.current)
+  const targets = employeeList.map((e) => e.goal.target)
+  const hitTargets = employeeList.map((e) => e.goal.current)
   const totalHitTargets = hitTargets && hitTargets.reduce((a, b) => a + b)
   const totalFinalTargets = targets && targets.reduce((a, b) => a + b)
   const resultFinal = (totalHitTargets * 100) / totalFinalTargets
@@ -43,7 +44,7 @@ function isFavorite(employee: EmployeeType) {
 
 function handleFavoriteCharacter(selected: EmployeeType) {
   const hasFavorites = favorites.value.length >= 0
-  const isFavorite = favorites.value.find(employee => employee.id == selected.id)
+  const isFavorite = favorites.value.find((employee) => employee.id == selected.id)
   if (!hasFavorites || !isFavorite) {
     favorites.value.push(selected)
   }
@@ -61,7 +62,6 @@ function goToAddEmployee() {
 function handleEditEmployee(id: string) {
   router.push(router.currentRoute.value.path + '/edit/' + id)
 }
-
 </script>
 
 <template>

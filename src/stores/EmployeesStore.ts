@@ -1,16 +1,17 @@
 import { defineStore } from "pinia";
 import type EmployeeType from "@/utils/types/employeeTypes";
+import employees from "@/data/employees";
 
-export const employeeStore = defineStore("employeeStore", {
+export const useEmployeeStore = defineStore("employeeStore", {
   state: () => ({
-    employeesList: <EmployeeType[]>[]
+    employeesData: <EmployeeType[]>(employees)
   }),
   getters: {
-
+    
   },
   actions: {
     addEmployeeList(list: EmployeeType[]) {
-      this.employeesList = <EmployeeType[]>(list)
+      this.employeesData = <EmployeeType[]>(list)
     }
   }
 })
