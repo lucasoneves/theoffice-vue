@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
-import employeesData from '@/data/employees.json'
+import employeesData from '@/data/employees'
 import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue';
 import ButtonAddNewIndex from '@/components/ButtonAddNew/ButtonAddNewIndex.vue';
 
