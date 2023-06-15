@@ -39,7 +39,7 @@ function displayTargetPercentage(user: any) {
 }
 
 function isFavorite(employee: EmployeeType) {
-  return favorites.value.length && favorites.value.indexOf(employee) != -1
+  return favorites.value.length && favorites.value.indexOf(employee) != -1 ? true : false
 }
 
 function handleFavoriteCharacter(selected: EmployeeType) {
@@ -73,7 +73,7 @@ function handleEditEmployee(id: string) {
       <h2 class="title-total">
         Total target: <strong>{{ displayTotalTarget + '%' }}</strong>
       </h2>
-      <ProgressBar :total="displayTotalTarget" />
+      <ProgressBar :total="Number(displayTotalTarget)" />
       <EmployeeListView>
         <template v-for="employee in employeeList" :key="employee.id">
           <Employee
