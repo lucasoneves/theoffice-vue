@@ -4,9 +4,9 @@
     :type="inputType"
     :name="name"
     :placeholder="placeholder"
-    value="value"
-    v-on:change="$emit('input', value)"
+    :value="value"
     v-model="value"
+    v-on:change="$emit('input', value)"
   />
 </template>
 
@@ -16,6 +16,7 @@ defineProps({
   inputType: String,
   name: String,
   placeholder: String,
+  value: String || Number
 })
 
 const value = ref('')
