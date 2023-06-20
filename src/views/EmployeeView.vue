@@ -35,7 +35,16 @@ const displayTotalTarget = computed(() => {
 })
 
 function displayTargetPercentage(user: any) {
-  return `${((user.goal.current * 100) / user.goal.target).toFixed(1) + '%'}`
+  if (user.goal.target) {
+    const result = `${((Number(user.goal.current) * 100) / Number(user.goal.target)).toFixed(1) + '%'}`
+    if (result) {
+      return result
+     } else {
+      return `No data`
+     }
+  } else {
+    return "Not applicable"
+  }
 }
 
 function isFavorite(employee: EmployeeType) {

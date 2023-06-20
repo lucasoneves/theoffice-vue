@@ -33,6 +33,7 @@ import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue'
 import Button from '@/components/Button/index.vue'
 import MainInputIndex from '@/components/MainInput/MainInputIndex.vue'
 import { useEmployeeStore } from '@/stores/EmployeesStore'
+import router from '@/router'
 
 const store = useEmployeeStore()
 const employeeRef = ref({
@@ -52,6 +53,7 @@ function handleSubmit() {
   console.log(employeeRef.value)
 
   store.addEmployeeList(employeeRef.value)
+  router.push('/')
 }
 
 </script>

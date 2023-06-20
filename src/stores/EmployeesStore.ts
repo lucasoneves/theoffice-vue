@@ -10,7 +10,7 @@ export const useEmployeeStore = defineStore("employeeStore", {
   },
   actions: {
     addEmployeeList(payload: any) {
-      this.employeesData.push(payload)
+      this.employeesData.unshift(payload)
     }
   }
 })
