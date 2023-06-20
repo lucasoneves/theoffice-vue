@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import type { Ref } from 'vue'
-import Employee from '../components/Employee/index.vue'
+import Employee from '../components/Employee/EmployeeIndex.vue'
 import EmployeeListView from '../components/EmployeeListView/index.vue'
 import ProgressBar from '../components/ProgressBar/index.vue'
 import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue'
@@ -26,20 +26,32 @@ interface EmployeeType {
 const favorites = ref<Array<EmployeeType>>([])
 
 const displayTotalTarget = computed(() => {
-  const targets = employeeList.map((e) => e.goal.target)
-  const hitTargets = employeeList.map((e) => e.goal.current)
-  const totalHitTargets = hitTargets && hitTargets.reduce((a, b) => a + b)
-  const totalFinalTargets = targets && targets.reduce((a, b) => a + b)
-  const resultFinal = (totalHitTargets * 100) / totalFinalTargets
-  return resultFinal.toFixed(1)
+  let resultFinal;
+  if (employeeList.length > 0) {
+    const targets = employeeList && employeeList.map((e) => e.goal.target)
+    const hitTargets = employeeList && employeeList.map((e) => e.goal.current)
+    const totalHitTargets = hitTargets && hitTargets.reduce((a, b) => a + b)
+    const totalFinalTargets = targets && targets.reduce((a, b) => a + b)
+    resultFinal = (totalHitTargets * 100) / totalFinalTargets
+  }
+  return resultFinal?.toFixed(1)
 })
 
 function displayTargetPercentage(user: any) {
-  return `${((user.goal.current * 100) / user.goal.target).toFixed(1) + '%'}`
+  if (user.goal.target) {
+    const result = `${((Number(user.goal.current) * 100) / Number(user.goal.target)).toFixed(1) + '%'}`
+    if (result) {
+      return result
+     } else {
+      return `No data`
+     }
+  } else {
+    return "Not applicable"
+  }
 }
 
 function isFavorite(employee: EmployeeType) {
-  return favorites.value.length && favorites.value.indexOf(employee) != -1
+  return favorites.value.length && favorites.value.indexOf(employee) != -1 ? true : false
 }
 
 function handleFavoriteCharacter(selected: EmployeeType) {
@@ -70,11 +82,13 @@ function handleEditEmployee(id: string) {
       <ButtonAddNew action="add-employee" @add-employee="goToAddEmployee" />
     </HeroSectionIndex>
     <div class="container">
-      <h2 class="title-total">
+      <template v-if="employeeList.length">
+        <h2 class="title-total" >
         Total target: <strong>{{ displayTotalTarget + '%' }}</strong>
       </h2>
-      <ProgressBar :total="displayTotalTarget" />
-      <EmployeeListView>
+      <ProgressBar :total="Number(displayTotalTarget)" />
+      </template>
+      <EmployeeListView v-if="employeeList.length">
         <template v-for="employee in employeeList" :key="employee.id">
           <Employee
             :key="employee.id"
@@ -88,6 +102,7 @@ function handleEditEmployee(id: string) {
           />
         </template>
       </EmployeeListView>
+      <EmptyResult><h2>No employees registered</h2></EmptyResult>
     </div>
   </main>
 </template>
