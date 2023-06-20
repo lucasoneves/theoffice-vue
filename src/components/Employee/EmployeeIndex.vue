@@ -35,12 +35,9 @@ defineEmits(['handle-favorite', 'handle-unfavorite', 'edit-employee'])
       >
         <v-icon name="md-favoriteborder" fill="white" />
       </span>
-      <span
-        @click.prevent="$emit('handle-unfavorite', { name: user?.name, id: user?.id })"
-        v-else
-      >
+      <span @click.prevent="$emit('handle-unfavorite', { name: user?.name, id: user?.id })" v-else>
         <v-icon name="md-favorite-sharp" fill="#9b2f2f" />
-    </span>
+      </span>
     </footer>
   </div>
 </template>
