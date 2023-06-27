@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import type { Ref } from 'vue'
 import Employee from '../components/Employee/EmployeeIndex.vue'
 import EmployeeListView from '../components/EmployeeListView/index.vue'
 import ProgressBar from '../components/ProgressBar/index.vue'
@@ -8,8 +7,9 @@ import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue'
 import ButtonAddNew from '@/components/ButtonAddNew/ButtonAddNewIndex.vue'
 // import { useEmployees } from '@/composables/useEmployees';
 import router from '@/router'
-
+import { onSnapShot } from 'firebase/firestore';
 import { useEmployeeStore } from '@/stores/EmployeesStore'
+import { employeesColection } from '@/main'
 
 const employeeList = useEmployeeStore().employeesData
 
@@ -26,27 +26,27 @@ interface EmployeeType {
 const favorites = ref<Array<EmployeeType>>([])
 
 const displayTotalTarget = computed(() => {
-  let resultFinal;
-  if (employeeList.length > 0) {
-    const targets = employeeList && employeeList.map((e) => e.goal.target)
-    const hitTargets = employeeList && employeeList.map((e) => e.goal.current)
-    const totalHitTargets = hitTargets && hitTargets.reduce((a, b) => a + b)
-    const totalFinalTargets = targets && targets.reduce((a, b) => a + b)
-    resultFinal = (totalHitTargets * 100) / totalFinalTargets
-  }
-  return resultFinal?.toFixed(1)
+  let resultFinal
+  const targets = employeeList && employeeList.map((e) => e.goal.target)
+  const hitTargets = employeeList && employeeList.map((e) => e.goal.current)
+  const totalHitTargets = hitTargets && hitTargets.reduce((a, b) => a + b)
+  const totalFinalTargets = targets && targets.reduce((a, b) => a + b)
+  resultFinal = (totalHitTargets * 100) / totalFinalTargets
+  return isNaN(resultFinal) ? 0 : resultFinal?.toFixed(1)
 })
 
-function displayTargetPercentage(user: any) {
+function displayEmployeeTargetPercentage(user: any) {
   if (user.goal.target) {
-    const result = `${((Number(user.goal.current) * 100) / Number(user.goal.target)).toFixed(1) + '%'}`
+    const result = `${
+      ((Number(user.goal.current) * 100) / Number(user.goal.target)).toFixed(1) + '%'
+    }`
     if (result) {
       return result
-     } else {
+    } else {
       return `No data`
-     }
+    }
   } else {
-    return "Not applicable"
+    return 'Not applicable'
   }
 }
 
@@ -74,6 +74,13 @@ function goToAddEmployee() {
 function handleEditEmployee(id: string) {
   router.push(router.currentRoute.value.path + '/edit/' + id)
 }
+
+onMounted(() => {
+  onSnapShot(employeesColection, snapshot => {
+    const data = snapshot.data();
+    console.log(data)
+  })
+})
 </script>
 
 <template>
@@ -83,10 +90,10 @@ function handleEditEmployee(id: string) {
     </HeroSectionIndex>
     <div class="container">
       <template v-if="employeeList.length">
-        <h2 class="title-total" >
-        Total target: <strong>{{ displayTotalTarget + '%' }}</strong>
-      </h2>
-      <ProgressBar :total="Number(displayTotalTarget)" />
+        <h2 class="title-total">
+          Total target: <strong>{{ displayTotalTarget + '%' }}</strong>
+        </h2>
+        <ProgressBar :total="Number(displayTotalTarget)" />
       </template>
       <EmployeeListView v-if="employeeList.length">
         <template v-for="employee in employeeList" :key="employee.id">
@@ -96,13 +103,13 @@ function handleEditEmployee(id: string) {
             @handle-favorite="() => handleFavoriteCharacter(employee)"
             @handle-unfavorite="() => handleUnFavoriteCharacter(employee)"
             :isFavorite="isFavorite(employee)"
-            :percentage="displayTargetPercentage(employee)"
+            :percentage="displayEmployeeTargetPercentage(employee)"
             @edit-employee="handleEditEmployee(employee.id)"
             v-if="employee.status === 1"
           />
         </template>
       </EmployeeListView>
-      <EmptyResult><h2>No employees registered</h2></EmptyResult>
+      <EmptyResult v-else><h2>No employees registered</h2></EmptyResult>
     </div>
   </main>
 </template>
