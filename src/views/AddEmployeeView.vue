@@ -20,6 +20,9 @@
           <label for="employee_goal_current">
             <MainInputIndex class="input" input-type="number" placeholder="Current Goal" name="currentGoal" v-model="employeeRef.goal.current" />
           </label>
+          <label for="employee_avatar">
+            <MainInputIndex class="input" input-type="file" placeholder="Avatar" name="avatar" v-model="employeeRef.avatar" />
+          </label>
         </section>
         <Button title="Save" :is-primary="true" class="button" />
       </form>

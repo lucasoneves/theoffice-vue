@@ -33,5 +33,6 @@ const value = ref('')
   outline: 0;
   height: 45px;
   font-size: 14px;
+  background: white;
 }
 </style>
