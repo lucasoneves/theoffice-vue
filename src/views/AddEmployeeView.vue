@@ -44,7 +44,7 @@ const employeeRef = ref({
   role: '',
   email: '',
   id: '',
-  status: 1,
+  active: true,
   avatar: '',
   goal: {
     target: 0,
@@ -55,7 +55,7 @@ const employeeRef = ref({
 function handleSubmit() {
   console.log(employeeRef.value)
 
-  store.addEmployeeList(employeeRef.value)
+  store.addEmployee(employeeRef.value)
   router.push('/')
 }
 
