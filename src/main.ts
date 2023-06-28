@@ -12,8 +12,8 @@ import router from './router'
 
 import './assets/main.css'
 
-const firebaseApp = initializeApp(config.firebase);
-const firebase = getFirestore(firebaseApp)
+const firebaseApp = initializeApp(config.firebaseConfig);
+const firestore = getFirestore(firebaseApp);
 export const employeesColection = collection(firestore, 'employees');
 
 addIcons(MdFavoriteborder, MdFavoriteSharp, BiPlusCircle, HiPencilAlt, CoTelegramPlane);

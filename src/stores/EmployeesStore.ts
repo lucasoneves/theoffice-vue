@@ -1,16 +1,19 @@
 import { defineStore } from "pinia";
-import employees from "@/data/employees";
+import { ref } from "vue";
 
 export const useEmployeeStore = defineStore("employeeStore", {
   state: () => ({
-    employeesData: employees
+    employeesData: ref([])
   }),
   getters: {
     
   },
   actions: {
-    addEmployeeList(payload: any) {
+    addEmployee(payload) {
       this.employeesData.unshift(payload)
+    },
+    addEmployeeList(payload) {
+      this.employeesData = payload
     }
   }
 })
