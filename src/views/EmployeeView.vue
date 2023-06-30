@@ -78,8 +78,7 @@ function handleEditEmployee(id: string) {
 onMounted(() => {
   onSnapshot(employeesColection, snapshot => {
     const employeeList = snapshot.docs.map(employee => employee.data())
-    store.addEmployee(employeeList)
-    console.log(employeeList)
+    store.addEmployeeList(employeeList)
   })
 })
 </script>
