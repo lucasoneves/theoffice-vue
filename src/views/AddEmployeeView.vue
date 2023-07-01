@@ -21,10 +21,10 @@
             <MainInputIndex class="input" input-type="number" placeholder="Current Goal" name="currentGoal" v-model="employeeRef.goal.current" />
           </label>
           <label for="employee_avatar">
-            <MainInputIndex class="input" input-type="file" placeholder="Avatar" name="avatar" v-model="employeeRef.avatar" />
+            <MainInputIndex class="input" input-type="text" placeholder="Avatar" name="avatar" v-model="employeeRef.avatar" />
           </label>
         </section>
-        <Button title="Save" :is-primary="true" class="button" />
+        <Button :title="!loading.valueOf() ? 'Save' : 'Loading...'" :is-primary="true" class="button" :disabled="loading.valueOf()" />
       </form>
     </div>
   </div>
@@ -36,9 +36,12 @@ import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue'
 import Button from '@/components/Button/index.vue'
 import MainInputIndex from '@/components/MainInput/MainInputIndex.vue'
 import { useEmployeeStore } from '@/stores/EmployeesStore'
+import { employeesColection } from '@/main'
+import { doc, setDoc } from "firebase/firestore"; 
 import router from '@/router'
 
 const store = useEmployeeStore()
+const loading = ref(false)
 const employeeRef = ref({
   name: '',
   role: '',
@@ -52,10 +55,18 @@ const employeeRef = ref({
   }
 })
 
-function handleSubmit() {
-  console.log(employeeRef.value)
-
+async function handleSubmit() {
+  loading.value = true
+  
   store.addEmployee(employeeRef.value)
+  try {
+    await setDoc(doc(employeesColection), {
+    ...employeeRef.value
+  });
+  loading.value = false
+  } catch (error) {
+    console.error(error)
+  }
   router.push('/')
 }
 
