@@ -60,12 +60,13 @@ async function handleSubmit() {
   
   store.addEmployee(employeeRef.value)
   try {
-    await setDoc(doc(employeesColection), {
+    setDoc(doc(employeesColection), {
     ...employeeRef.value
   });
   loading.value = false
   } catch (error) {
     console.error(error)
+    loading.value = false
   }
   router.push('/')
 }
