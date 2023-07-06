@@ -6,7 +6,7 @@
           <img :src="suplier.avatar" alt="" class="card-suplier__avatar" loading="lazy">
         </div>
         <div class="card-suplier__item card-suplier__item--flex">
-          <span>{{ suplier.name }}</span>
+          <span>{{ suplier.name: }}</span>
           <span>{{ suplier.email }}</span>
         </div>
         <div class="card-suplier__item">

@@ -3,7 +3,7 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { config } from '../config';
 import { getAuth, signInAnonymously } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from "firebase/app";
 
 const firebaseApp = initializeApp(config.firebaseConfig);
 const auth = getAuth(firebaseApp);
