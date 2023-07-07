@@ -7,9 +7,14 @@ import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue'
 import ButtonAddNew from '@/components/ButtonAddNew/ButtonAddNewIndex.vue'
 // import { useEmployees } from '@/composables/useEmployees';
 import router from '@/router'
-import { onSnapshot, doc } from 'firebase/firestore';
+import { onSnapshot, doc, collection } from 'firebase/firestore';
 import { useEmployeeStore } from '@/stores/EmployeesStore'
-import { employeesColection } from '@/main'
+
+import initialize from '../firebase'
+
+const { firebaseApp, auth, firestore }  = initialize();
+
+const employeesColection = collection(firestore, 'employees')
 
 const store = useEmployeeStore()
 
@@ -77,8 +82,11 @@ function handleEditEmployee(id: string) {
 
 onMounted(() => {
   onSnapshot(employeesColection, snapshot => {
-    const employeeList = snapshot.docs.map(employee => employee.data())
-    store.addEmployeeList(employeeList)
+    if (snapshot.docs.length > 1) {
+      const employeeList = snapshot.docs.map(employee => employee.data())
+      store.addEmployeeList(employeeList)
+      console.log(employeeList)
+    }
   })
 })
 </script>
