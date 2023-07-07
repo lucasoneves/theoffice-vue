@@ -2,9 +2,9 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { OhVueIcon, addIcons } from "oh-vue-icons";
+import {collection} from 'firebase/firestore'
 import { MdFavoriteborder, MdFavoriteSharp, BiPlusCircle, HiPencilAlt, CoTelegramPlane } from "oh-vue-icons/icons";
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection } from 'firebase/firestore';
+import initialize from './firebase';
 import { config } from './config';
 
 import App from './App.vue'
@@ -12,9 +12,8 @@ import router from './router'
 
 import './assets/main.css'
 
-const firebaseApp = initializeApp(config.firebaseConfig);
-const firestore = getFirestore(firebaseApp);
-export const employeesColection = collection(firestore, 'employees');
+// const { firebase, firestore, auth } = initialize();
+// export const employeesColection = collection(firestore, 'employees');
 
 addIcons(MdFavoriteborder, MdFavoriteSharp, BiPlusCircle, HiPencilAlt, CoTelegramPlane);
 

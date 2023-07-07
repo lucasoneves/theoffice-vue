@@ -36,11 +36,13 @@ import HeroSectionIndex from '@/components/HeroSection/HeroSectionIndex.vue'
 import Button from '@/components/Button/index.vue'
 import MainInputIndex from '@/components/MainInput/MainInputIndex.vue'
 import { useEmployeeStore } from '@/stores/EmployeesStore'
-import { employeesColection } from '@/main'
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc, collection, getFirestore } from "firebase/firestore"; 
 import router from '@/router'
+import initialize from '../firebase'
+
 
 const store = useEmployeeStore()
+const employeesColection = collection(getFirestore(), 'employees')
 const loading = ref(false)
 const employeeRef = ref({
   name: '',

@@ -1,25 +1,12 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router';
-import { config } from '../config';
-import { getAuth, signInAnonymously } from 'firebase/auth';
-import { initializeApp } from "firebase/app";
+import { signInAnonymously } from 'firebase/auth';
+import initialize from '../firebase';
 
-const firebaseApp = initializeApp(config.firebaseConfig);
-const auth = getAuth(firebaseApp);
-
-async function signIn() {
-  const result = await signInAnonymously(auth)
-  result.user
-  router.push('/employees')
-}
+const { firebaseApp, firestore, auth } = initialize();
 
 
-const router = useRouter();
-
-onMounted(async () => {
-  await signIn();
-})
 </script>
 
 <template>
