@@ -16,7 +16,7 @@ const { firebaseApp, auth, firestore }  = initialize();
 
 const employeesColection = collection(firestore, 'employees')
 
-const store = useEmployeeStore()
+const employeeListData = ref<Array<EmployeeType>>([])
 
 interface EmployeeType {
   id: string
@@ -32,8 +32,8 @@ const favorites = ref<Array<EmployeeType>>([])
 
 const displayTotalTarget = computed(() => {
   let resultFinal
-  const targets = store.employeesData && store.employeesData.map((e) => e.goal?.target)
-  const hitTargets = store.employeesData && store.employeesData.map((e) => e.goal?.current)
+  const targets = employeeListData.value && employeeListData.value.map((e) => e.goal?.target)
+  const hitTargets = employeeListData.value && employeeListData.value.map((e) => e.goal?.current)
   const totalHitTargets = hitTargets && hitTargets.reduce((a, b) => a + b)
   const totalFinalTargets = targets && targets.reduce((a, b) => a + b)
   resultFinal = (totalHitTargets * 100) / totalFinalTargets
@@ -82,11 +82,15 @@ function handleEditEmployee(id: string) {
 
 onMounted(() => {
   onSnapshot(employeesColection, snapshot => {
-    if (snapshot.docs.length > 1) {
-      const employeeList = snapshot.docs.map(employee => employee.data())
-      store.addEmployeeList(employeeList)
-      console.log(employeeList)
-    }
+    const result = snapshot.docs.map(employee => {
+      const data = employee.data();
+      const { id } = employee;
+      return {
+        id,
+        ...data
+      } as EmployeeType;
+    });
+    employeeListData.value = result
   })
 })
 </script>
@@ -97,14 +101,14 @@ onMounted(() => {
       <ButtonAddNew action="add-employee" @add-employee="goToAddEmployee" />
     </HeroSectionIndex>
     <div class="container">
-      <template v-if="store.employeesData.length">
+      <template v-if="employeeListData.length">
         <h2 class="title-total">
           Total target: <strong>{{ displayTotalTarget + '%' }}</strong>
         </h2>
         <ProgressBar :total="Number(displayTotalTarget)" />
       </template>
-      <EmployeeListView v-if="store.employeesData.length">
-        <template v-for="employee in store.employeesData" :key="employee.id">
+      <EmployeeListView v-if="employeeListData.length">
+        <template v-for="employee in employeeListData" :key="employee.id">
           <Employee
             :key="employee.id"
             :user="employee"
@@ -113,7 +117,8 @@ onMounted(() => {
             :isFavorite="isFavorite(employee)"
             :percentage="displayEmployeeTargetPercentage(employee)"
             @edit-employee="handleEditEmployee(employee.id)"
-            v-if="employee.active"/>
+            v-if="employee.active"
+          />
         </template>
       </EmployeeListView>
       <EmptyResult v-else><h2>No employees registered</h2></EmptyResult>
